@@ -1,0 +1,122 @@
+{
+    "name": "endhivok/endhivokorg-project",
+    "description": "Builds https://endhivok.org using Composer & Drupal 8",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Curtis Blumer",
+            "role": "Maintainer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/EndHIVOK/ehok_contact"
+        }
+    ],
+    "suggest": {
+        "ext-zend-opcache": "*"
+    },
+    "require": {
+        "php": "^7.1",
+        "composer/installers": "^1.2",
+        "cweagans/composer-patches": "^1.6.5",
+        "drupal-composer/drupal-scaffold": "^2.5",
+        "drupal/address": "^1.4",
+        "drupal/admin_toolbar": "^1.26",
+        "drupal/adminimal_admin_toolbar": "^1.9",
+        "drupal/adminimal_theme": "^1.4",
+        "drupal/core": "^8.6.0",
+        "drupal/ehok_contact": "@dev",
+        "drupal/entity": "~1.0",
+        "drupal/geocoder": "^2.1",
+        "drupal/geofield": "^1.1",
+        "drupal/geofield_map": "^2.31",
+        "drupal/leaflet": "^1.4",
+        "drupal/material_admin": "^1.0@alpha",
+        "drupal/office_hours": "^1.1",
+        "drupal/rdfui": "^1.0@beta",
+        "drupal/redhen": "^1.0@alpha",
+        "drupal/toolbar_anti_flicker": "^3.1",
+        "vlucas/phpdotenv": "^2.4",
+        "webflo/drupal-finder": "^1.0.0",
+        "webmozart/path-util": "^2.3",
+        "zaporylie/composer-drupal-optimizations": "^1.0"
+    },
+    "require-dev": {
+        "composer/composer": ">=1.0.0",
+        "drupal/console": "^1.0.2",
+        "drush/drush": "^9.0.0",
+        "psr/log": "^1.1",
+        "webflo/drupal-core-require-dev": "^8.6.0"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {
+            "EndHivOkProject\\Composer\\": "src/Composer/"
+        }
+    },
+    "scripts": {
+        "pre-install-cmd": [
+            "EndHivOkProject\\Composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "pre-update-cmd": [
+            "EndHivOkProject\\Composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "post-install-cmd": [
+            "EndHivOkProject\\Composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "post-update-cmd": [
+            "EndHivOkProject\\Composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "clean": [],
+        "rm-vendor-dir": [],
+    },
+    "extra": {
+        "composer-exit-on-patch-failure": true,
+        "patchLevel": {
+            "drupal/core": "-p2"
+        },
+        "installer-paths": {
+            "web/core": [
+              "type:drupal-core"
+            ],
+            "web/libraries/{$name}": [
+              "type:drupal-library"
+            ],
+            "web/modules/contrib/{$name}": [
+              "type:drupal-module"
+            ],
+            "web/profiles/contrib/{$name}": [
+              "type:drupal-profile"],
+            "web/themes/contrib/{$name}": [
+              "type:drupal-theme"
+            ],
+            "web/modules/custom/{$name}": [
+              "type:drupal-custom-module"
+            ],
+            "drush/Commands/{$name}": [
+              "type:drupal-drush"
+            ]
+        },
+        "drupal-scaffold": {
+            "initial": {
+                ".editorconfig": "../.editorconfig",
+                ".gitattributes": "../.gitattributes"
+            }
+        }
+    }
+}

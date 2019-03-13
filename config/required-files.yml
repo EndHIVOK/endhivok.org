@@ -1,0 +1,20 @@
+/root:
+  /assets: ~
+  /bin: ~
+  /config: ~
+  /src: ~
+  /templates: ~
+  /translations: ~
+  /var: ~
+  /vendor: ~
+  /web:
+    /modules:
+      /contrib:
+        .gitkeep
+    /profiles:
+      /contrib: ~
+    /sites:
+      /default:
+        /files: ~
+    /themes:
+      /contrib: ~

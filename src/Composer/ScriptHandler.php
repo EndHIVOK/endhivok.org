@@ -2,43 +2,18 @@
 declare(strict_types=1);
 /**
  * @file
- * Contains \EndHivOkProject\Composer\ScriptHandler file.
+ * Contains \EhokProject\Composer\ScriptHandler file.
  */
 
-namespace EndHivOkProject\Composer;
+namespace EhokProject\Composer;
 
 use Composer\Script\Event as ComposerEvent;
 use Composer\Semver\Comparator as SemverComparator;
 use DrupalFinder\DrupalFinder;
-use EndHivOkProject\Composer\AbstractScriptHandler;
 use Symfony\Component\Filesystem\Filesystem;
 use Webmozart\PathUtil\Path;
 
-class ScriptHandler extends AbstractScriptHandler {
-
-  /**
-   * @inheritdoc
-   */
-  private $singleton;
-
-  /**
-   * @inheritdoc
-   */
-  private $filesystem;
-
-  /**
-   * @inheritdoc
-   */
-  private $drupalRoot;
-
-  /**
-   * @inheritdoc
-   */
-  private $composerEvent;
-
-  public function __construct(ComposerEvent $composerEvent)
-  {
-  }
+class ScriptHandler implements ScriptHandlerInterface {
 
   /**
    * @inheritdoc
@@ -93,32 +68,38 @@ class ScriptHandler extends AbstractScriptHandler {
     }
   }
 
-  /**
-   * @inheritdoc
-   */
-  public static function checkComposerVersion(ComposerEvent $composerEvent): void
+  public static function checkComposerVersion(?ComposerEvent $composerEvent): void
   {
-    $composer = $composerEvent->getComposer();
-    $composerIO = $composerEvent->getIO();
-    $composerVersion = $composer::VERSION;
+    if($composerEvent) {
+      $composer = $composerEvent->getComposer();
+      $composerIO = $composerEvent->getIO();
+      $composerVersion = $composer::VERSION;
 
-    $composerIO->writeError('<info>Composer version: '. $composerVersion .'</info>');
+      $composerIO->writeError('Composer version: <info>'. $composerVersion .'</info>', true, $composerIO::DEBUG);
 
-    // The dev-channel of composer uses the git revision as version number,
-    // try to the branch alias instead.
-    if (preg_match('/^[0-9a-f]{40}$/i', $composerVersion)) {
-      $composerVersion = $composer::BRANCH_ALIAS_VERSION;
+
+      // The dev-channel of composer uses the git revision as version number,
+      // try to the branch alias instead.
+      if (preg_match('/^[0-9a-f]{40}$/i', $composerVersion)) {
+        $composerVersion = $composer::BRANCH_ALIAS_VERSION;
+      }
+
+      // If Composer is installed through git we have no easy way to determine if
+      // it is new enough, just display a warning.
+      if ($composerVersion === '@package_version@' || $composerVersion === '@package_branch_alias_version@') {
+        if($composerEvent) {
+          $composerIO->writeError('<warning>You are running a development version of Composer. If you experience problems, please update Composer to the latest stable version.</warning>');
+        }
+      }
+      elseif (SemverComparator::lessThan($composerVersion, '1.0.0')) {
+        if($composerEvent) {
+          $composerIO->writeError('<error>Drupal-project requires Composer version 1.0.0 or higher. Please update your Composer before continuing</error>.');
+          exit(1);
+        }
+      }
     }
 
-    // If Composer is installed through git we have no easy way to determine if
-    // it is new enough, just display a warning.
-    if ($composerVersion === '@package_version@' || $composerVersion === '@package_branch_alias_version@') {
-      $composerIO->writeError('<warning>You are running a development version of Composer. If you experience problems, please update Composer to the latest stable version.</warning>');
-    }
-    elseif (SemverComparator::lessThan($composerVersion, '1.0.0')) {
-      $composerIO->writeError('<error>Drupal-project requires Composer version 1.0.0 or higher. Please update your Composer before continuing</error>.');
-      exit(1);
-    }
+    return;
   }
 
 }

@@ -2,10 +2,10 @@
 declare(strict_types=1);
 /**
  * @file
- * Contains \EndHivOkProject\Composer\ScriptHandlerInterface file.
+ * Contains \EhokProject\Composer\ScriptHandlerInterface file.
  */
 
-namespace EndHivOkProject\Composer;
+namespace EhokProject\Composer;
 
 use Composer\Script\Event as ComposerEvent;
 use Composer\Semver\Comparator;
@@ -15,17 +15,6 @@ use Webmozart\PathUtil\Path;
 
 interface ScriptHandlerInterface {
 
-  public function __construct(ComposerEvent $composerEvent);
-
-  public static function createInstance(ComposerEvent $composerEvent): ScriptHandlerInterface;
-
-  /**
-   * Create require files and folders for Drupal 8 installation.
-   *
-   * @param ComposerEvent $event \Composer\Script\Event object.
-   *
-   * @return void
-   */
   public static function createRequiredFiles(ComposerEvent $composerEvent): void;
 
   /**
@@ -47,7 +36,5 @@ interface ScriptHandlerInterface {
    * @return void
    **/
   public static function checkComposerVersion(ComposerEvent $composerEvent): void;
-
-  /*public static function findDrupalRoot(DrupalFinder $drupalFinder);*/
 
 }

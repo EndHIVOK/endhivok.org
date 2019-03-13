@@ -9,16 +9,19 @@
             "role": "Maintainer"
         }
     ],
-    "repositories": [
-        {
+    "repositories": {
+        "0": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
-        {
+        "1": {
             "type": "vcs",
             "url": "https://github.com/EndHIVOK/ehok_contact"
-        }
-    ],
+        },
+        "drupal.allow_ssl_downgrade": false,
+        "packagist.org.allow_ssl_downgrade": false,
+        "drupal.org.allow_ssl_downgrade": false
+    },
     "suggest": {
         "ext-zend-opcache": "*"
     },
@@ -86,8 +89,8 @@
         "apcu-autoloader": false
     },
     "autoload": {
-        "files" : [
-          "src/initialize.php"
+        "files": [
+            "src/initialize.php"
         ],
         "psr-4": {
             "EhokProject\\Composer\\": "src/Composer/",
@@ -113,24 +116,25 @@
         },
         "installer-paths": {
             "web/core": [
-              "type:drupal-core"
+                "type:drupal-core"
             ],
             "web/libraries/{$name}": [
-              "type:drupal-library"
+                "type:drupal-library"
             ],
             "web/modules/contrib/{$name}": [
-              "type:drupal-module"
+                "type:drupal-module"
             ],
             "web/profiles/contrib/{$name}": [
-              "type:drupal-profile"],
+                "type:drupal-profile"
+            ],
             "web/themes/contrib/{$name}": [
-              "type:drupal-theme"
+                "type:drupal-theme"
             ],
             "web/modules/custom/{$name}": [
-              "type:drupal-custom-module"
+                "type:drupal-custom-module"
             ],
             "drush/Commands/{$name}": [
-              "type:drupal-drush"
+                "type:drupal-drush"
             ]
         },
         "drupal-scaffold": {

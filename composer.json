@@ -24,6 +24,7 @@
     },
     "require": {
         "php": "^7.1",
+        "composer/composer": ">=1.0.0",
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6.5",
         "drupal-composer/drupal-scaffold": "^2.5",
@@ -31,28 +32,46 @@
         "drupal/admin_toolbar": "^1.26",
         "drupal/adminimal_admin_toolbar": "^1.9",
         "drupal/adminimal_theme": "^1.4",
+        "drupal/blazy": "~2.0",
+        "drupal/config_partial_export": "^1.4",
+        "drupal/config_sync": "^2.0@beta",
+        "drupal/console": "^1.0.2",
         "drupal/core": "^8.6.0",
-        "drupal/ehok_contact": "@dev",
+        "drupal/date_recur": "^1.0",
+        "drupal/ehok_contact": "dev-develop",
         "drupal/entity": "~1.0",
         "drupal/geocoder": "^2.1",
         "drupal/geofield": "^1.1",
         "drupal/geofield_map": "^2.31",
+        "drupal/google_calendar": "^1.0@beta",
         "drupal/leaflet": "^1.4",
         "drupal/material_admin": "^1.0@alpha",
+        "drupal/media_entity_facebook": "^2.0@alpha",
+        "drupal/media_entity_googledocs": "^4.0",
+        "drupal/media_entity_instagram": "^2.0@alpha",
+        "drupal/media_entity_slideshare": "^2.0@alpha",
+        "drupal/media_entity_slideshow": "^2.0@alpha",
+        "drupal/media_entity_twitter": "^2.0@alpha",
         "drupal/office_hours": "^1.1",
+        "drupal/paragraphs": "^1.6",
         "drupal/rdfui": "^1.0@beta",
         "drupal/redhen": "^1.0@alpha",
+        "drupal/slick": "^2.0@alpha",
+        "drupal/slick_extras": "^1.0@RC",
+        "drupal/slick_media": "^2.0@alpha",
+        "drupal/slick_video": "^1.0@RC",
+        "drupal/slick_views": "^2.0@RC",
         "drupal/toolbar_anti_flicker": "^3.1",
+        "drupal/video_embed_field": "^2.0",
+        "drupal/video_embed_html5": "^1.1",
+        "drush/drush": "^9.5",
+        "psr/log": "^1.1",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3",
         "zaporylie/composer-drupal-optimizations": "^1.0"
     },
     "require-dev": {
-        "composer/composer": ">=1.0.0",
-        "drupal/console": "^1.0.2",
-        "drush/drush": "^9.0.0",
-        "psr/log": "^1.1",
         "webflo/drupal-core-require-dev": "^8.6.0"
     },
     "conflict": {
@@ -62,28 +81,30 @@
     "prefer-stable": true,
     "config": {
         "sort-packages": true,
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "optimize-autoloader": false,
+        "apcu-autoloader": false
     },
     "autoload": {
+        "files" : [
+          "src/initialize.php"
+        ],
         "psr-4": {
-            "EndHivOkProject\\Composer\\": "src/Composer/"
+            "EhokProject\\Composer\\": "src/Composer/",
+            "EhokProject\\Env\\": "src/Env/"
         }
     },
     "scripts": {
         "pre-install-cmd": [
-            "EndHivOkProject\\Composer\\ScriptHandler::checkComposerVersion"
+            "EhokProject\\Composer\\Preflight::run"
         ],
         "pre-update-cmd": [
-            "EndHivOkProject\\Composer\\ScriptHandler::checkComposerVersion"
+            "EhokProject\\Composer\\Preflight::run"
         ],
-        "post-install-cmd": [
-            "EndHivOkProject\\Composer\\ScriptHandler::checkComposerVersion"
-        ],
-        "post-update-cmd": [
-            "EndHivOkProject\\Composer\\ScriptHandler::checkComposerVersion"
-        ],
+        "post-install-cmd": [],
+        "post-update-cmd": [],
         "clean": [],
-        "rm-vendor-dir": [],
+        "rm-vendor-dir": []
     },
     "extra": {
         "composer-exit-on-patch-failure": true,
